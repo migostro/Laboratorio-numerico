@@ -1,0 +1,2 @@
+para testar a parte 1 (Zoologico) chame a função com -1 no lugar de "compressedImg", ficando assim decompress(-1, method, k, h), usando o metodo, k e h escolhidos.
+Já para testar a parte 2 (selva) basta colocar o nome da imagem normalmente

@@ -1,0 +1,51 @@
+**IMPORTANTE** 
+    Para compilar a parte 1:
+        gcc ep3-1.c -lm -o ep3-1
+    E para compilar a parte 2:
+        gcc ep3-2.c -lm -o ep3-2
+
+    A partir disso é só dar ./ep3-1 e ./ep3-2 para executa-os
+
+    E para a parte 2 do ep deixei uma macro chamada FUNC para escolher a função que será integrada, podendo ter os valores {0,1,2,3} e cada valor definira a integral que vamos calcular (esta explicado no codigo)
+** FIM DO IMPORTANTE **
+Na parte 1 desse ep, foi ultilizado a interpolação de Newton para aproximar a função da F(x)cos(x) para que podessemos integrar usando os métodos pedidos. Para calcular a primeira iteração do trapezio composto (para a construção da primeira coluna da regra de Romberg também) calculei T fora do loop, pois já que não ha perda de perfomance. Para calcular o valor de x em Pn(x), foi feito para não repetir contas que já foram feitas antes, deixando essa parte mais otimizada. Na função "Newton" que calcula as constantes do polinomio de Newton, optei por, ao invéz de construir uma matriz triangular inferior, contrui uma "matriz triangular superior espelhado na coluna do meio" então a matriz contruida fica com a seguinte cara: 
+|* * * * |
+|* * * 0 |
+|* * 0 0 |
+|* 0 0 0 |
+sendo * algum numero real.
+    Eu printei cada resultado dos métodos com 20 casas após a virgula pq achei que pode ser interessante para avaliar os métodos na hora da correção. E com m = 25 obtive os seguintes resultados:
+    TRAPEZIO 117.13162142857026992715
+    SIMPSON  117.13162163940148730035
+    ROMBERG  117.13162142856839409433
+
+    E de longe o método de Romberg é o que consegue uma aproximação muito mais rapida além de ser estremamente rapido não sendo muito difente do metódo do trapezio em questão de tempo de execução
+
+    Na parte 2 desse ep,
+    Na segunda integral, na substitui y = (x-3)/(7-3) assim temos que dy = dx/(7-3) e disso temos que 
+        x = 4y+3 e dx = dy/4
+    E assim já temos a integral de 4(4y+3)³dy de 0 a 1
+
+    Na terceira integral, fiz substituição de de variavel em que 
+        y = 1/(x+1) 
+    e com isso temos que quando 
+        x = 0, y = 1 e quando x = +inf, então y = 0, 
+    e com isso conseguimos uma integral de 0 1. E agora na substituição de dx, temos que 
+        x = (1/y)-1 e dy = -y²dx. 
+    Agora substituindo os valores temos a integral de 0 a 1 de exp(1-1/y)/y² dy
+
+    Para o restante não foi necessario trocar as variaveis pois as integrais já estavam no intevalo [0,1].
+
+    Nos testes feitos com n = 1000000 e em 1 dimensão teve os seguintes resultados:
+        Para a integral de sin de 0 a 1:
+            a area calculada foi de 0.459824
+            e a area real é aproximadamente 0.459697
+        Para a integral de x³ de 3 a 7:
+            a area calculada foi de 580.548324
+            sendo o valor da integral 580
+        Para a integral de exp(-x) de 0 a +inf:
+            a area calculada foi de 1.001079
+            sendo a area real 1
+        E para a estimativa de pi, 
+            3.142280
+            sendo que pi = 3.141562
